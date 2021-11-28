@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="dist/tailwind.css">
+  <link rel="stylesheet" href="dist/css/all.min.css">
+  <title>喔 ~ Happy 的運將。</title>
+</head>
+
+<body class="bg-gray-100">
+
+  <header class="fixed top-0 left-0 w-full flex justify-between items-center z-9999 p-5">
+    <a href="index.html">
+      <img src="img/logo.svg" alt="logo">
+    </a>
+    <div class="bg-white rounded-full shadow-header">
+      <div class="flex px-4 py-3">
+        <a href="map.html"
+          class="duration-300 flex justify-center items-center text-dark-gray rounded-full min-w-37.5 py-3 hover:text-white hover:bg-primary">
+          公車動態
+        </a>
+        <a href="map.html"
+          class="duration-300 flex justify-center items-center text-dark-gray rounded-full min-w-37.5 py-3 hover:text-white hover:bg-primary">
+          路線規劃
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="relative h-screen">
+    <h1 class="absolute top-25 left-1/2 z-50 transform -translate-x-1/2 font-medium text-64px">喔 ~ <span
+        class="text-primary">Happy</span> 的運將。</h1>
+    <div class="relative h-full" id="scene">
+      <img src="img/banner-1.svg" alt="背景圖" class="w-full h-full object-cover">
+      <img src="img/banner-2.svg" alt="背景圖" class="absolute top-0 left-0 w-full h-full object-cover" data-depth="0.2">
+      <img src="img/banner-3.svg" alt="背景圖" class="absolute top-0 left-0 w-full h-full object-cover" data-depth="0.4">
+      <img src="img/banner-4.svg" alt="背景圖" class="absolute top-0 left-0 w-full h-full object-cover" data-depth="0.6">
+      <img src="img/banner-5.svg" alt="背景圖" class="absolute top-0 left-0 w-full h-full object-cover" data-depth="0.8">
+      <img src="img/banner-6.svg" alt="背景圖" class="absolute top-0 left-0 w-full h-full object-cover" data-depth="5">
+      <img src="img/banner-7.svg" alt="背景圖" class="absolute top-0 left-0 w-full h-full object-cover" data-depth="0.8">
+    </div>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/parallax/3.1.0/parallax.min.js"></script>
+  <script>
+    parallaxInstance = new Parallax(document.getElementById("scene"), {
+      limitY: 0,
+    });
+  </script>
+
+</body>
+
+</html>

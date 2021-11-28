@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1440" height="900" viewBox="0 0 1440 900">
+  <defs>
+    <clipPath id="clip-banner-3">
+      <rect width="1440" height="900"/>
+    </clipPath>
+  </defs>
+  <g id="banner-3" clip-path="url(#clip-banner-3)">
+    <g id="Group_148" data-name="Group 148">
+      <line id="Line_8" data-name="Line 8" y1="160" transform="translate(1130 640)" fill="none" stroke="#e8eaec" stroke-width="2"/>
+      <circle id="Ellipse_377" data-name="Ellipse 377" cx="50" cy="50" r="50" transform="translate(1080 613)" fill="#fff"/>
+    </g>
+    <g id="Group_136" data-name="Group 136" transform="translate(78)">
+      <line id="Line_10" data-name="Line 10" y1="160" transform="translate(844 640)" fill="none" stroke="#e8eaec" stroke-width="2"/>
+      <rect id="Rectangle_60" data-name="Rectangle 60" width="100" height="180" rx="50" transform="translate(794 510)" fill="#e8eaec"/>
+    </g>
+    <g id="Group_146" data-name="Group 146" transform="translate(-138)">
+      <line id="Line_11" data-name="Line 11" y1="160" transform="translate(520 640)" fill="none" stroke="#e8eaec" stroke-width="2"/>
+      <circle id="Ellipse_378" data-name="Ellipse 378" cx="50" cy="50" r="50" transform="translate(470 575)" fill="#fff"/>
+    </g>
+    <line id="Line_34" data-name="Line 34" y2="130" transform="translate(30 640)" fill="none" stroke="#fff" stroke-width="2"/>
+    <g id="Group_145" data-name="Group 145" transform="translate(-20)">
+      <line id="Line_5" data-name="Line 5" y1="160" transform="translate(160 640)" fill="none" stroke="#e8eaec" stroke-width="2"/>
+      <rect id="Rectangle_57" data-name="Rectangle 57" width="120" height="210" rx="60" transform="translate(100 480)" fill="#e8eaec"/>
+      <line id="Line_6" data-name="Line 6" y1="160" transform="translate(90 640)" fill="none" stroke="#e8eaec" stroke-width="2"/>
+      <circle id="Ellipse_376" data-name="Ellipse 376" cx="50" cy="50" r="50" transform="translate(40 625)" fill="#fff"/>
+    </g>
+    <g id="Group_147" data-name="Group 147">
+      <line id="Line_5-2" data-name="Line 5" y1="160" transform="translate(1310 640)" fill="none" stroke="#e8eaec" stroke-width="2"/>
+      <line id="Line_7" data-name="Line 7" y1="160" transform="translate(1365 640)" fill="none" stroke="#e8eaec" stroke-width="2"/>
+      <rect id="Rectangle_57-2" data-name="Rectangle 57" width="100" height="180" rx="50" transform="translate(1260 500)" fill="#e8eaec"/>
+      <rect id="Rectangle_58" data-name="Rectangle 58" width="70" height="120" rx="35" transform="translate(1330 600)" fill="#dee0e2"/>
+    </g>
+  </g>
+</svg>

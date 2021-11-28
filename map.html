@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+  <link rel="stylesheet" href="dist/tailwind.css">
+  <link rel="stylesheet" href="dist/css/all.min.css">
+  <title>喔 ~ Happy 的運將。</title>
+</head>
+
+<body class="bg-gray-100">
+
+  <div id="app">
+    <header class="fixed top-0 left-0 w-full flex justify-between items-center z-9999 p-5">
+      <a href="index.html">
+        <img src="img/logo.svg" alt="logo">
+      </a>
+      <div class="bg-white rounded-full shadow-header">
+        <div class="flex px-4 py-3">
+          <a href="map.html"
+            class="duration-300 flex justify-center items-center text-white bg-primary rounded-full min-w-37.5 py-3 hover:text-white hover:bg-primary">
+            公車動態
+          </a>
+          <a href="map.html"
+            class="duration-300 flex justify-center items-center text-dark-gray rounded-full min-w-37.5 py-3 hover:text-white hover:bg-primary">
+            路線規劃
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="relative flex h-screen">
+      <div class="relative flex flex-col bg-white max-w-120 w-full h-full rounded-r-15 z-1001 px-5 pt-30 pb-20">
+        <div class="relative border-2 border-dark-gray rounded-lg overflow-hidden mb-5">
+          <select class="block w-full px-4.5 py-3" v-model="nowCity" @change="getData">
+            <option value="" disabled selected>請選擇縣市</option>
+            <option v-for="item in cities" :value="item.nameEn">{{ item.name }}</option>
+          </select>
+          <img src="img/icon-down-arrow.svg" alt="icon-down-arrow"
+            class="absolute top-1/2 right-5 transform -translate-y-1/2">
+        </div>
+        <div class="relative border-2 border-dark-gray rounded-lg overflow-hidden mb-5">
+          <select class="block w-full px-4.5 py-3" :disabled="nowCity ===''" v-model="busRoute" @change="getBusData">
+            <option value="" disabled selected>請選擇公車路線</option>
+            <option v-for="bus in filterRouteNameData" :value="bus">{{ bus }}</option>
+          </select>
+          <img src="img/icon-down-arrow.svg" alt="icon-down-arrow"
+            class="absolute top-1/2 right-5 transform -translate-y-1/2">
+        </div>
+        <template v-if="filterBusData.length">
+          <div class="flex bg-light-gray rounded-lg overflow-hidden mb-8">
+            <div class="w-1/2">
+              <a href="javascript:;"
+                class="block duration-300 text-center rounded-lg py-3 hover:bg-primary hover:text-white"
+                :class="{'text-white bg-primary': direction === 0, 'text-dark-gray': direction !== 0}"
+                @click="direction = 0">
+                <h2>往 {{ goName }}</h2>
+              </a>
+            </div>
+            <div class="w-1/2">
+              <a href="javascript:;"
+                class="block duration-300 text-center rounded-lg py-3 hover:bg-primary hover:text-white"
+                :class="{'text-white bg-primary': direction === 1, 'text-dark-gray': direction !== 1}"
+                @click="direction = 1">
+                <h2>往 {{ backName }}</h2>
+              </a>
+            </div>
+          </div>
+          <ul class="flex-1 overflow-y-auto">
+            <li class="flex px-2.5 mb-2.5">
+              <div class="w-1/4">
+                <h3 class="text-dark-gray">站序</h3>
+              </div>
+              <div class="w-1/2">
+                <h3 class="text-dark-gray">站名</h3>
+              </div>
+              <div class="w-1/4">
+                <h3 class="text-dark-gray">預估到站</h3>
+              </div>
+            </li>
+            <li class="flex border-t border-black border-opacity-10 px-2.5 py-3.5"
+              v-for="(stop, index) in filterBusData[direction]?.Stops">
+              <div class="w-1/4">
+                <span class="text-dark-gray">{{ index + 1 }}</span>
+              </div>
+              <div class="w-1/2">
+                <h3 class="text-dark-gray">{{ stop.StopName.Zh_tw }}</h3>
+              </div>
+              <div class="w-1/4">
+                <div class="text-sm text-dark-gray text-center bg-light-gray min-w-22.5 rounded-lg py-1.5">
+                  開發中
+                </div>
+              </div>
+            </li>
+          </ul>
+        </template>
+        <template v-else>
+          <h3 class="text-dark-gray">請篩選查詢條件</h3>
+        </template>
+      </div>
+      <div id="map" class="absolute top-0 right-0 w-full h-full"></div>
+    </main>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/3.2.0/sha.js"></script>
+  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+
+  <script type="module">
+    import { createApp } from 'https://cdnjs.cloudflare.com/ajax/libs/vue/3.1.4/vue.esm-browser.min.js';
+    let map = null;
+    createApp({
+      data() {
+        return {
+          data: [],
+          filterRouteNameData: [],
+          routeNameData: [],
+          busData: [],
+          filterBusData: [],
+          busRoute: '',
+          map: null,
+          cities: [
+            {
+              name: '臺北市',
+              nameEn: 'Taipei',
+            },
+            {
+              name: '新北市',
+              nameEn: 'NewTaipei',
+            },
+            {
+              name: '桃園市',
+              nameEn: 'Taoyuan',
+            },
+            {
+              name: '臺中市',
+              nameEn: 'Taichung',
+            },
+            {
+              name: '臺南市',
+              nameEn: 'Tainan',
+            },
+            {
+              name: '高雄市',
+              nameEn: 'Kaohsiung',
+            },
+            {
+              name: '基隆市',
+              nameEn: 'Keelung',
+            },
+            {
+              name: '新竹市',
+              nameEn: 'Hsinchu',
+            },
+            {
+              name: '新竹縣',
+              nameEn: 'HsinchuCounty',
+            },
+            {
+              name: '苗栗縣',
+              nameEn: 'MiaoliCounty',
+            },
+            {
+              name: '彰化縣',
+              nameEn: 'ChanghuaCounty',
+            },
+            {
+              name: '南投縣',
+              nameEn: 'NantouCounty',
+            },
+            {
+              name: '雲林縣',
+              nameEn: 'YunlinCounty',
+            },
+            {
+              name: '嘉義縣',
+              nameEn: 'ChiayiCounty',
+            },
+            {
+              name: '嘉義市',
+              nameEn: 'Chiayi',
+            },
+            {
+              name: '屏東縣',
+              nameEn: 'PingtungCounty',
+            },
+            {
+              name: '宜蘭縣',
+              nameEn: 'YilanCounty',
+            },
+            {
+              name: '花蓮縣',
+              nameEn: 'HualienCounty',
+            },
+            {
+              name: '臺東縣',
+              nameEn: 'TaitungCounty',
+            },
+            {
+              name: '金門縣',
+              nameEn: 'KinmenCounty',
+            },
+            {
+              name: '澎湖縣',
+              nameEn: 'PenghuCounty',
+            },
+            {
+              name: '連江縣',
+              nameEn: 'LienchiangCounty',
+            },
+          ],
+          nowCity: '',
+          backData: [],
+          goData: [],
+          direction: 0,
+        };
+      },
+      methods: {
+        getAuthorizationHeader() {
+          //  填入自己 ID、KEY 開始
+          const appId = '32327b82bd1845d6a0a6db5df546a225';
+          const appKey = '3SJ4izVJkK0kTiIfvxkfXUecvSY';
+          //  填入自己 ID、KEY 結束
+          let GMTString = new Date().toGMTString();
+          let ShaObj = new jsSHA('SHA-1', 'TEXT');
+          ShaObj.setHMACKey(appKey, 'TEXT');
+          ShaObj.update('x-date: ' + GMTString);
+          let HMAC = ShaObj.getHMAC('B64');
+          let Authorization = 'hmac username=\"' + appId + '\", algorithm=\"hmac-sha1\", headers=\"x-date\", signature=\"' + HMAC + '\"';
+          return { 'Authorization': Authorization, 'X-Date': GMTString };
+        },
+        getData() {
+          this.busRoute = '';
+          this.filterBusData = [];
+          let baseUrl = 'https://ptx.transportdata.tw/MOTC';
+          let url = `${baseUrl}/v2/Bus/RealTimeByFrequency/City/${this.nowCity}`;
+          console.log(url);
+          axios.get(url, {
+            headers: this.getAuthorizationHeader()
+          })
+            .then((res) => {
+              this.routeNameData = [];
+              this.data = res.data;
+              this.data.forEach((item) => {
+                this.routeNameData.push(item.RouteName.Zh_tw);
+                this.filterRouteNameData = ([...new Set(this.routeNameData)]);
+              });
+              this.filterRouteNameData.sort((a, b) => a.localeCompare(b, 'zh-Hans-CN', { sensitivity: 'accent' }));
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        },
+        getBusData() {
+          let baseUrl = 'https://ptx.transportdata.tw/MOTC';
+          let url = `${baseUrl}/v2/Bus/StopOfRoute/City/${this.nowCity}/${this.busRoute}`;
+          axios.get(url, {
+            headers: this.getAuthorizationHeader()
+          })
+            .then((res) => {
+              this.busData = res.data;
+              this.filterBusData = this.busData.filter((item) => {
+                return item.RouteName.Zh_tw === this.busRoute;
+              });
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        },
+      },
+      computed: {
+        goName() {
+          return this.filterBusData.length ? this.filterBusData[0].Stops[this.filterBusData[0].Stops.length - 1].StopName.Zh_tw : '';
+        },
+        backName() {
+          return this.filterBusData.length ? this.filterBusData[1].Stops[this.filterBusData[1].Stops.length - 1].StopName.Zh_tw : '';
+        }
+      },
+      mounted() {
+        map = L.map('map').setView([24.1618378, 120.6446744], 10);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+      }
+    }).mount('#app');
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,18 @@
+// 色系
+$primary: #FF4128;
+$secondary: #ECEEF0;
+$black: #000000;
+$white: #ffffff;
+
+// 灰階，寫法nth($grayscale,第幾個顏色、css第一個位子為1，js才是0)
+$gray-100: #ECEEF0;
+$gray-200: #8C919B;
+
+// RWD斷點
+$mq-breakpoints: (
+  sm: 576,
+  md: 768,
+  lg: 992,
+  xl: 1200,
+  xxl: 1601
+);

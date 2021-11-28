@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1440" height="900" viewBox="0 0 1440 900">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_87" data-name="Rectangle 87" width="611" height="48" transform="translate(961 1526)" fill="#fff" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+    <clipPath id="clip-path-2">
+      <rect id="Rectangle_101" data-name="Rectangle 101" width="354" height="40" transform="translate(282 1181)" fill="#fff" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+    <clipPath id="clip-path-3">
+      <rect id="Rectangle_86" data-name="Rectangle 86" width="693" height="52" transform="translate(-657 -1179)" fill="#fff" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+    <clipPath id="clip-path-4">
+      <rect id="Rectangle_102" data-name="Rectangle 102" width="354" height="35" transform="translate(282 1186)" fill="#fff" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+    <clipPath id="clip-banner-2">
+      <rect width="1440" height="900"/>
+    </clipPath>
+  </defs>
+  <g id="banner-2" clip-path="url(#clip-banner-2)">
+    <g id="Mask_Group_6" data-name="Mask Group 6" transform="translate(64 -1346)" clip-path="url(#clip-path)">
+      <path id="Union_38" data-name="Union 38" d="M135,403C135,181.534,314.534,2,536,2A399.937,399.937,0,0,1,684.533,30.408,231.23,231.23,0,0,1,759.5,18C887.354,18,991,121.646,991,249.5a230.563,230.563,0,0,1-54.029,148.656c.019,1.618.029,3.222.029,4.844,0,221.466-179.534,401-401,401S135,624.466,135,403Z" transform="translate(647 1524)" fill="#fff"/>
+    </g>
+    <g id="Mask_Group_7" data-name="Mask Group 7" transform="translate(581 -877)" clip-path="url(#clip-path-2)">
+      <path id="Union_40" data-name="Union 40" d="M-18,148.5A152.511,152.511,0,0,1,226.192,26.633a136,136,0,1,1-6,248.03A152.52,152.52,0,0,1-18,148.5Z" transform="translate(282 1187)" fill="#fff"/>
+    </g>
+    <g id="Mask_Group_5" data-name="Mask Group 5" transform="translate(506 1551)" clip-path="url(#clip-path-3)">
+      <path id="Union_37" data-name="Union 37" d="M69,411C69,185.668,251.668,3,477,3A406.48,406.48,0,0,1,649.17,41,195.468,195.468,0,0,1,719.5,28C827.472,28,915,115.3,915,223a193.773,193.773,0,0,1-36.73,113.8A410.472,410.472,0,0,1,885,411c0,225.332-182.668,408-408,408S69,636.332,69,411Z" transform="translate(-879 -1179)" fill="#fff"/>
+    </g>
+    <g id="Mask_Group_8" data-name="Mask Group 8" transform="translate(-27 -1051)" clip-path="url(#clip-path-4)">
+      <path id="Union_41" data-name="Union 41" d="M93.565,190.964c-.853.024-1.706.035-2.565.035a91,91,0,1,1,49.946-167.08A135.994,135.994,0,1,1,93.565,190.964Z" transform="translate(282 1187)" fill="#fff"/>
+    </g>
+  </g>
+</svg>
